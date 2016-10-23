@@ -12,5 +12,6 @@
     <modules>
         <module>jpa</module>
         <module>services</module>
+        <module>webapp</module>
     </modules>
 </project>
