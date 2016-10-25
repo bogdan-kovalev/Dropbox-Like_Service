@@ -21,7 +21,7 @@ public class UserServiceController {
     UserRegistrationService userRegistrationService;
 
     @PostMapping
-    public UserDTO register(@RequestBody UserRegistrationDTO registrationData) {
+    public UserDTO register(@RequestBody UserRegistrationDTO registrationData) throws Exception {
         return this.userRegistrationService.register(registrationData);
     }
 }

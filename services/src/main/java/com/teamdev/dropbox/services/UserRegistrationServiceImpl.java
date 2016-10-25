@@ -17,7 +17,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     UserRepository userRepository;
 
     @Override
-    public UserDTO register(UserRegistrationDTO registrationData) {
+    public UserDTO register(UserRegistrationDTO registrationData) throws Exception {
         final User newUser = new User(registrationData.name, registrationData.email, registrationData.password);
         this.userRepository.save(newUser);
         return new UserDTO(newUser.getId(), newUser.getName(), newUser.getEmail());

@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
  */
 
 @Configuration
-@ComponentScan(basePackages = {"com.teamdev.dropbox.services"})
-public class AppConfig {
+@ComponentScan(basePackages = {
+        "com.teamdev.dropbox.services",
+        "com.teamdev.dropbox.repository"})
+public class TestConfig {
 }

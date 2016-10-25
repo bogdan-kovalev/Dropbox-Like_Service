@@ -8,6 +8,6 @@ import com.teamdev.dropbox.dto.UserRegistrationDTO;
  */
 public interface UserRegistrationService {
 
-    UserDTO register(UserRegistrationDTO registrationData);
+    UserDTO register(UserRegistrationDTO registrationData) throws Exception;
 
 }

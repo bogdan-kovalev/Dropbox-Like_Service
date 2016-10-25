@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.*;
  * @author Bogdan Kovalev.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppConfig.class})
+@ContextConfiguration(classes = TestConfig.class)
 public class UserRegistrationServiceTest {
 
     @Autowired
@@ -25,7 +25,7 @@ public class UserRegistrationServiceTest {
             new UserRegistrationDTO("John", "john@mail.com", "abc123");
 
     @Test
-    public void registerNewUser() {
+    public void registerNewUser() throws Exception {
         final UserDTO userDTO =
                 registrationService.register(validUserRegistrationDTO);
 

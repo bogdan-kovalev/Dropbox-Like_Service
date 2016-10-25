@@ -1,13 +1,24 @@
 package com.teamdev.dropbox.repository;
 
 import com.teamdev.dropbox.entity.User;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+
+import java.util.Collection;
 
 /**
  * @author Bogdan Kovalev.
  */
 
-@Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository {
+
+    void save(User user) throws Exception;
+
+    User getById(String id) throws Exception;
+
+    User getByEmail(String email) throws Exception;
+
+    Collection<User> getAll();
+
+    void delete(String id);
+
+    void deleteAll();
 }

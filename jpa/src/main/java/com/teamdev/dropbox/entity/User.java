@@ -2,21 +2,16 @@ package com.teamdev.dropbox.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.util.UUID;
 
 /**
  * @author Bogdan Kovalev.
  */
 
 @Data
-@Entity
 public class User {
 
-    @Id
-    @GeneratedValue
-    private String id;
+    private final String id = UUID.randomUUID().toString();
 
     private String name;
     private String email;
