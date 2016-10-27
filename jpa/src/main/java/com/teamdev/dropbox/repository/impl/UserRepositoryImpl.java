@@ -62,12 +62,15 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void delete(String email) {
-        throw new RuntimeException("Not implemented yet");
+    public void delete(String id) throws Exception {
+        final String email = getById(id).getEmail();
+        idToUserMap.remove(id);
+        emailToIdMap.remove(email);
     }
 
     @Override
     public void deleteAll() {
-        throw new RuntimeException("Not implemented yet");
+        idToUserMap.clear();
+        emailToIdMap.clear();
     }
 }

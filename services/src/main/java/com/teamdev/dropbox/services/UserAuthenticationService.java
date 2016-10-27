@@ -9,7 +9,7 @@ import com.teamdev.dropbox.serviceobjects.UserLoginInfo;
 
 public interface UserAuthenticationService {
 
-    AuthenticationToken login(UserLoginInfo loginInfo);
+    AuthenticationToken login(UserLoginInfo loginInfo) throws Exception;
 
-    boolean isTokenValid(AuthenticationToken token);
+    boolean isTokenValid(AuthenticationToken token) throws Exception;
 }

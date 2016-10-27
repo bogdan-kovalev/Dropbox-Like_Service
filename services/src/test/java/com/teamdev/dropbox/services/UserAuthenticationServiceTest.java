@@ -22,7 +22,7 @@ import static org.junit.Assert.assertThat;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
-public class UserAuthenticationServiceImplTest {
+public class UserAuthenticationServiceTest {
 
     @Autowired
     UserRepository userRepository;

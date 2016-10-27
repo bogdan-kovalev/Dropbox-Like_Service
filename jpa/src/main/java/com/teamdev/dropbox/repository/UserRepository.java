@@ -18,7 +18,7 @@ public interface UserRepository {
 
     Collection<User> getAll();
 
-    void delete(String id);
+    void delete(String id) throws Exception;
 
     void deleteAll();
 }
