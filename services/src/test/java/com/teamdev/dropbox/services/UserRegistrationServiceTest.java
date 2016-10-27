@@ -9,7 +9,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
 /**
  * @author Bogdan Kovalev.
@@ -29,7 +30,7 @@ public class UserRegistrationServiceTest {
         final UserDTO userDTO =
                 registrationService.register(validUserRegistrationDTO);
 
-        assertThat(userDTO, is(instanceOf(UserDTO.class)));
+        assertThat(userDTO, is(notNullValue()));
         assertThat(userDTO.id, is(notNullValue()));
         assertThat(userDTO.name, is(validUserRegistrationDTO.name));
         assertThat(userDTO.email, is(validUserRegistrationDTO.email));
