@@ -1,7 +1,7 @@
 package com.teamdev.dropbox.controller;
 
 import com.teamdev.dropbox.dto.UserDTO;
-import com.teamdev.dropbox.dto.UserRegistrationDTO;
+import com.teamdev.dropbox.serviceobjects.UserRegistrationInfo;
 import com.teamdev.dropbox.services.UserRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +21,7 @@ public class UserServiceController {
     UserRegistrationService userRegistrationService;
 
     @PostMapping
-    public UserDTO register(@RequestBody UserRegistrationDTO registrationData) throws Exception {
+    public UserDTO register(@RequestBody UserRegistrationInfo registrationData) throws Exception {
         return this.userRegistrationService.register(registrationData);
     }
 }

@@ -1,4 +1,4 @@
-package com.teamdev.dropbox.loginobjects;
+package com.teamdev.dropbox.serviceobjects;
 
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;

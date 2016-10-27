@@ -1,7 +1,9 @@
 package com.teamdev.dropbox.services;
 
 import com.teamdev.dropbox.dto.UserDTO;
-import com.teamdev.dropbox.dto.UserRegistrationDTO;
+import com.teamdev.dropbox.repository.UserRepository;
+import com.teamdev.dropbox.serviceobjects.UserRegistrationInfo;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +24,25 @@ public class UserRegistrationServiceTest {
     @Autowired
     UserRegistrationService registrationService;
 
-    private final UserRegistrationDTO validUserRegistrationDTO =
-            new UserRegistrationDTO("John", "john@mail.com", "abc123");
+    @Autowired
+    UserRepository userRepository;
+
+    private final UserRegistrationInfo validUserRegistrationInfo =
+            new UserRegistrationInfo("John", "john@mail.com", "abc123");
+
+    @After
+    public void clearRepository() {
+        userRepository.deleteAll();
+    }
 
     @Test
     public void registerNewUser() throws Exception {
         final UserDTO userDTO =
-                registrationService.register(validUserRegistrationDTO);
+                registrationService.register(validUserRegistrationInfo);
 
         assertThat(userDTO, is(notNullValue()));
         assertThat(userDTO.id, is(notNullValue()));
-        assertThat(userDTO.name, is(validUserRegistrationDTO.name));
-        assertThat(userDTO.email, is(validUserRegistrationDTO.email));
+        assertThat(userDTO.name, is(validUserRegistrationInfo.name));
+        assertThat(userDTO.email, is(validUserRegistrationInfo.email));
     }
 }

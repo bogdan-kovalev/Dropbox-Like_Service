@@ -1,4 +1,4 @@
-package com.teamdev.dropbox.dto;
+package com.teamdev.dropbox.serviceobjects;
 
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -6,12 +6,9 @@ import lombok.ToString;
 /**
  * @author Bogdan Kovalev.
  */
-
-@RequiredArgsConstructor
 @ToString
-public class UserRegistrationDTO {
-
-    public final String name;
+@RequiredArgsConstructor
+public class UserLoginInfo {
     public final String email;
     public final String password;
 }

@@ -1,9 +1,9 @@
 package com.teamdev.dropbox.services;
 
-import com.teamdev.dropbox.dto.UserRegistrationDTO;
-import com.teamdev.dropbox.loginobjects.AuthenticationToken;
-import com.teamdev.dropbox.loginobjects.UserLoginInfo;
 import com.teamdev.dropbox.repository.UserRepository;
+import com.teamdev.dropbox.serviceobjects.AuthenticationToken;
+import com.teamdev.dropbox.serviceobjects.UserLoginInfo;
+import com.teamdev.dropbox.serviceobjects.UserRegistrationInfo;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +40,7 @@ public class UserAuthenticationServiceImplTest {
 
     @Test
     public void checkItGeneratesSameTokenForSameLoginInfo() throws Exception {
-        final UserRegistrationDTO registrationData = new UserRegistrationDTO("John", "JohnSnow@winterfell.com", "qwerty");
+        final UserRegistrationInfo registrationData = new UserRegistrationInfo("John", "JohnSnow@winterfell.com", "qwerty");
         userRegistrationService.register(registrationData);
 
         final AuthenticationToken token1 = userAuthenticationService.login(
@@ -54,8 +54,8 @@ public class UserAuthenticationServiceImplTest {
 
     @Test
     public void checkItGeneratesDifferentTokensForDifferentLoginInfo() throws Exception {
-        final UserRegistrationDTO registrationData1 = new UserRegistrationDTO("John", "JohnSnow@winterfell.com", "qwerty");
-        final UserRegistrationDTO registrationData2 = new UserRegistrationDTO("John", "John_Snow@winterfell.com", "qwerty");
+        final UserRegistrationInfo registrationData1 = new UserRegistrationInfo("John", "JohnSnow@winterfell.com", "qwerty");
+        final UserRegistrationInfo registrationData2 = new UserRegistrationInfo("John", "John_Snow@winterfell.com", "qwerty");
 
         userRegistrationService.register(registrationData1);
         userRegistrationService.register(registrationData2);
@@ -71,7 +71,7 @@ public class UserAuthenticationServiceImplTest {
 
     @Test
     public void checkSuccessfulLogin() throws Exception {
-        final UserRegistrationDTO registrationData = new UserRegistrationDTO("John", "JohnSnow@winterfell.com", "qwerty");
+        final UserRegistrationInfo registrationData = new UserRegistrationInfo("John", "JohnSnow@winterfell.com", "qwerty");
         userRegistrationService.register(registrationData);
 
         final AuthenticationToken token = userAuthenticationService.login(
@@ -82,7 +82,7 @@ public class UserAuthenticationServiceImplTest {
 
     @Test
     public void checkFailedLogin() throws Exception {
-        final UserRegistrationDTO registrationData = new UserRegistrationDTO("John", "JohnSnow@winterfell.com", "qwerty");
+        final UserRegistrationInfo registrationData = new UserRegistrationInfo("John", "JohnSnow@winterfell.com", "qwerty");
         userRegistrationService.register(registrationData);
 
         final AuthenticationToken token = userAuthenticationService.login(

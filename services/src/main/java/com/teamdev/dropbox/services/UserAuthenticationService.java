@@ -1,7 +1,7 @@
 package com.teamdev.dropbox.services;
 
-import com.teamdev.dropbox.loginobjects.AuthenticationToken;
-import com.teamdev.dropbox.loginobjects.UserLoginInfo;
+import com.teamdev.dropbox.serviceobjects.AuthenticationToken;
+import com.teamdev.dropbox.serviceobjects.UserLoginInfo;
 
 /**
  * @author Bogdan Kovalev.
