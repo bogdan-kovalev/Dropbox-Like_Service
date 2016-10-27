@@ -2,7 +2,7 @@ package com.teamdev.dropbox.controller;
 
 import com.teamdev.dropbox.dto.UserDTO;
 import com.teamdev.dropbox.serviceobjects.AuthenticationToken;
-import com.teamdev.dropbox.serviceobjects.UserLoginInfo;
+import com.teamdev.dropbox.serviceobjects.LoginCredentials;
 import com.teamdev.dropbox.serviceobjects.UserRegistrationInfo;
 import com.teamdev.dropbox.services.UserAuthenticationService;
 import com.teamdev.dropbox.services.UserRegistrationService;
@@ -33,7 +33,7 @@ public class UserServiceController {
 
     @PostMapping
     @RequestMapping("/login")
-    public AuthenticationToken login(@RequestBody UserLoginInfo loginInfo) throws Exception {
-        return this.userAuthenticationService.login(loginInfo);
+    public AuthenticationToken login(@RequestBody LoginCredentials loginCredentials) throws Exception {
+        return this.userAuthenticationService.login(loginCredentials);
     }
 }

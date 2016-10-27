@@ -8,7 +8,7 @@ import lombok.ToString;
  */
 @ToString
 @RequiredArgsConstructor
-public class UserLoginInfo {
+public class LoginCredentials {
     public final String email;
     public final String password;
 }

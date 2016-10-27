@@ -1,7 +1,7 @@
 package com.teamdev.dropbox.services;
 
 import com.teamdev.dropbox.serviceobjects.AuthenticationToken;
-import com.teamdev.dropbox.serviceobjects.UserLoginInfo;
+import com.teamdev.dropbox.serviceobjects.LoginCredentials;
 
 /**
  * @author Bogdan Kovalev.
@@ -9,7 +9,7 @@ import com.teamdev.dropbox.serviceobjects.UserLoginInfo;
 
 public interface UserAuthenticationService {
 
-    AuthenticationToken login(UserLoginInfo loginInfo) throws Exception;
+    AuthenticationToken login(LoginCredentials loginCredentials) throws Exception;
 
     boolean isTokenValid(AuthenticationToken token) throws Exception;
 }

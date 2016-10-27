@@ -3,7 +3,7 @@ package com.teamdev.dropbox.services;
 import com.teamdev.dropbox.entity.User;
 import com.teamdev.dropbox.repository.UserRepository;
 import com.teamdev.dropbox.serviceobjects.AuthenticationToken;
-import com.teamdev.dropbox.serviceobjects.UserLoginInfo;
+import com.teamdev.dropbox.serviceobjects.LoginCredentials;
 import com.teamdev.dropbox.util.HashingUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -23,24 +23,16 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
     UserRepository userRepository;
 
     @Override
-    public AuthenticationToken login(UserLoginInfo loginInfo) throws Exception {
-        final User user = userRepository.getByEmail(loginInfo.email);
-        final Claims claims = Jwts.claims().setSubject(user.getEmail());
+    public AuthenticationToken login(LoginCredentials loginCredentials) throws Exception {
+        final User user = userRepository.getByEmail(loginCredentials.email);
 
-        final String originalHash = user.getPasswordHash();
-        final String currentHash = HashingUtil.createHash(loginInfo.password, user.getPasswordSalt());
-
-        if (!originalHash.equals(currentHash)) {
-            return null;
-        }
-
-        claims.setId(user.getId());
-        claims.put("hash", originalHash);
+        validateCredentials(user, loginCredentials);
 
         final String token = Jwts.builder()
-                .setClaims(claims)
+                .setClaims(createClaims(user))
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
+
         return new AuthenticationToken(token);
     }
 
@@ -55,5 +47,22 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
         final String passwordHash = String.valueOf(body.get("hash"));
         final User user = userRepository.getById(userId);
         return user.getPasswordHash().equals(passwordHash);
+    }
+
+    private void validateCredentials(User user, LoginCredentials loginCredentials) throws Exception {
+        final String originalHash = user.getPasswordHash();
+        final String currentHash = HashingUtil.createHash(loginCredentials.password, user.getPasswordSalt());
+        if (!originalHash.equals(currentHash)) {
+            throw new Exception("Invalid email or password have been provided");
+        }
+    }
+
+    private Claims createClaims(User user) {
+        final Claims claims = Jwts.claims()
+                .setSubject(user.getEmail())
+                .setId(user.getId());
+
+        claims.put("hash", user.getPasswordHash());
+        return claims;
     }
 }
