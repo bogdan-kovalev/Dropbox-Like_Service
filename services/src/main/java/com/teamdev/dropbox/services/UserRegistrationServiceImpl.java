@@ -21,7 +21,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     public UserDTO register(UserRegistrationInfo registrationInfo) throws Exception {
         final byte[] salt = HashingUtil.randomSalt();
         final String passwordHash = HashingUtil.createHash(registrationInfo.password, salt);
-        final User newUser = new User(registrationInfo.name, registrationInfo.email, passwordHash, salt);
+        final User newUser = new User(registrationInfo.name.getValue(), registrationInfo.email.getValue(), passwordHash, salt);
         this.userRepository.save(newUser);
         return new UserDTO(newUser.getId(), newUser.getName(), newUser.getEmail());
     }

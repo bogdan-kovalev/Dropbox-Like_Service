@@ -3,6 +3,9 @@ package com.teamdev.dropbox.services;
 import com.teamdev.dropbox.dto.UserDTO;
 import com.teamdev.dropbox.repository.UserRepository;
 import com.teamdev.dropbox.serviceobjects.UserRegistrationInfo;
+import com.teamdev.dropbox.tinytypes.Email;
+import com.teamdev.dropbox.tinytypes.Password;
+import com.teamdev.dropbox.tinytypes.UserName;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +31,7 @@ public class UserRegistrationServiceTest {
     UserRepository userRepository;
 
     private final UserRegistrationInfo validUserRegistrationInfo =
-            new UserRegistrationInfo("John", "john@mail.com", "abc123");
+            new UserRegistrationInfo(new UserName("John"), new Email("john@mail.com"), new Password("abc123"));
 
     @After
     public void clearRepository() {
@@ -42,7 +45,7 @@ public class UserRegistrationServiceTest {
 
         assertThat(userDTO, is(notNullValue()));
         assertThat(userDTO.id, is(notNullValue()));
-        assertThat(userDTO.name, is(validUserRegistrationInfo.name));
-        assertThat(userDTO.email, is(validUserRegistrationInfo.email));
+        assertThat(userDTO.name, is(validUserRegistrationInfo.name.getValue()));
+        assertThat(userDTO.email, is(validUserRegistrationInfo.email.getValue()));
     }
 }

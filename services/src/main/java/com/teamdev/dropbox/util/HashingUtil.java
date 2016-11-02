@@ -1,5 +1,7 @@
 package com.teamdev.dropbox.util;
 
+import com.teamdev.dropbox.tinytypes.Password;
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.xml.bind.DatatypeConverter;
@@ -13,8 +15,8 @@ public class HashingUtil {
     private static final int HASH_BYTE_SIZE = 18;
     private static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
 
-    public static String createHash(String password, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), salt, PBKDF2_ITERATIONS, HASH_BYTE_SIZE * 8);
+    public static String createHash(Password password, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        PBEKeySpec spec = new PBEKeySpec(password.getValue().toCharArray(), salt, PBKDF2_ITERATIONS, HASH_BYTE_SIZE * 8);
         SecretKeyFactory skf = SecretKeyFactory.getInstance(PBKDF2_ALGORITHM);
         byte[] hash = skf.generateSecret(spec).getEncoded();
 

@@ -4,6 +4,9 @@ import com.teamdev.dropbox.repository.UserRepository;
 import com.teamdev.dropbox.serviceobjects.AuthenticationToken;
 import com.teamdev.dropbox.serviceobjects.LoginCredentials;
 import com.teamdev.dropbox.serviceobjects.UserRegistrationInfo;
+import com.teamdev.dropbox.tinytypes.Email;
+import com.teamdev.dropbox.tinytypes.Password;
+import com.teamdev.dropbox.tinytypes.UserName;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +42,7 @@ public class UserAuthenticationServiceTest {
 
     @Test
     public void checkItGeneratesSameTokenForSameUserCredentials() throws Exception {
-        final UserRegistrationInfo registrationData = new UserRegistrationInfo("John", "JohnSnow@winterfell.com", "qwerty");
+        final UserRegistrationInfo registrationData = new UserRegistrationInfo(new UserName("John"), new Email("JohnSnow@winterfell.com"), new Password("qwerty"));
         userRegistrationService.register(registrationData);
 
         final AuthenticationToken token1 = userAuthenticationService.login(
@@ -53,8 +56,8 @@ public class UserAuthenticationServiceTest {
 
     @Test
     public void checkItGeneratesDifferentTokensForDifferentUserCredentials() throws Exception {
-        final UserRegistrationInfo registrationData1 = new UserRegistrationInfo("John", "JohnSnow@winterfell.com", "qwerty");
-        final UserRegistrationInfo registrationData2 = new UserRegistrationInfo("John", "John_Snow@winterfell.com", "qwerty");
+        final UserRegistrationInfo registrationData1 = new UserRegistrationInfo(new UserName("John"), new Email("JohnSnow@winterfell.com"), new Password("qwerty"));
+        final UserRegistrationInfo registrationData2 = new UserRegistrationInfo(new UserName("John"), new Email("John_Snow@winterfell.com"), new Password("qwerty"));
 
         userRegistrationService.register(registrationData1);
         userRegistrationService.register(registrationData2);
@@ -70,7 +73,7 @@ public class UserAuthenticationServiceTest {
 
     @Test
     public void checkSuccessfulLogin() throws Exception {
-        final UserRegistrationInfo registrationData = new UserRegistrationInfo("John", "JohnSnow@winterfell.com", "qwerty");
+        final UserRegistrationInfo registrationData = new UserRegistrationInfo(new UserName("John"), new Email("JohnSnow@winterfell.com"), new Password("qwerty"));
         userRegistrationService.register(registrationData);
 
         final AuthenticationToken token = userAuthenticationService.login(
@@ -81,9 +84,9 @@ public class UserAuthenticationServiceTest {
 
     @Test(expected = Exception.class)
     public void checkFailedLogin() throws Exception {
-        final UserRegistrationInfo registrationData = new UserRegistrationInfo("John", "JohnSnow@winterfell.com", "qwerty");
+        final UserRegistrationInfo registrationData = new UserRegistrationInfo(new UserName("John"), new Email("JohnSnow@winterfell.com"), new Password("qwerty"));
         userRegistrationService.register(registrationData);
 
-        userAuthenticationService.login(new LoginCredentials(registrationData.email, "anotherpassword"));
+        userAuthenticationService.login(new LoginCredentials(registrationData.email, new Password("anotherpassword")));
     }
 }

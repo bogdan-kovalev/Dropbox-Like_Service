@@ -24,7 +24,7 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
 
     @Override
     public AuthenticationToken login(LoginCredentials loginCredentials) throws Exception {
-        final User user = userRepository.getByEmail(loginCredentials.email);
+        final User user = userRepository.getByEmail(loginCredentials.email.getValue());
 
         validateCredentials(user, loginCredentials);
 
