@@ -20,8 +20,8 @@ import java.util.Arrays;
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 @ComponentScan
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class RestSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -49,11 +49,16 @@ public class RestSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .authorizeRequests().antMatchers("/api/login", "/api/register").permitAll()
-                .anyRequest().authenticated().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+
+                .authorizeRequests()
+                .antMatchers("/api/login", "/api/register").permitAll()
+                .and()
+
+                .authorizeRequests().anyRequest().authenticated().and()
+
+                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler);
 
         httpSecurity.headers().cacheControl();
     }

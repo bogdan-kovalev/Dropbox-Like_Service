@@ -1,5 +1,6 @@
 package com.teamdev.dropbox;
 
+import com.teamdev.dropbox.serviceobjects.AuthenticatedUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
@@ -9,18 +10,26 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Bogdan Kovalev.
  */
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+    private final List<String> skipJwtAuth;
+
     public JwtAuthenticationFilter(String defaultFilterProcessesUrl) {
         super(defaultFilterProcessesUrl);
+        skipJwtAuth = new ArrayList<>();
+        skipJwtAuth.add("/api/login");
+        skipJwtAuth.add("/api/register");
+        skipJwtAuth.add("/error");
     }
 
     @Override
     protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        return true;
+        return !skipJwtAuth.contains(request.getServletPath());
     }
 
     @Override
@@ -43,8 +52,8 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
             throws IOException, ServletException {
         super.successfulAuthentication(request, response, chain, authResult);
 
-        // As this authentication is in HTTP header, after success we need to continue the request normally
-        // and return the response as if the resource was not secured at all
+        final AuthenticatedUser authenticatedUser = (AuthenticatedUser) authResult.getPrincipal();
+        response.setHeader("Authentication", "Bearer " + authenticatedUser.getToken());
         chain.doFilter(request, response);
     }
 }
