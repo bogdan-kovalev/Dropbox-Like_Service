@@ -1,5 +1,6 @@
 package com.teamdev.dropbox.services;
 
+import com.teamdev.dropbox.dto.UserDTO;
 import com.teamdev.dropbox.entity.User;
 import com.teamdev.dropbox.repository.UserRepository;
 import com.teamdev.dropbox.serviceobjects.AuthenticationToken;
@@ -37,16 +38,20 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
     }
 
     @Override
-    public boolean isTokenValid(AuthenticationToken token) throws Exception {
+    public UserDTO retrieveUser(AuthenticationToken token) throws Exception {
         Claims body = Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token.token)
                 .getBody();
 
-        final String userId = body.getId();
-        final String passwordHash = String.valueOf(body.get("hash"));
+        final Long userId = Long.valueOf(body.getId());
+        final String email = body.getSubject();
         final User user = userRepository.getById(userId);
-        return user.getPasswordHash().equals(passwordHash);
+        if (user != null && email.equals(user.getEmail())) {
+            return new UserDTO(userId, user.getName(), email);
+        } else {
+            return null;
+        }
     }
 
     private void validateCredentials(User user, LoginCredentials loginCredentials) throws Exception {
@@ -60,9 +65,8 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
     private Claims createClaims(User user) {
         final Claims claims = Jwts.claims()
                 .setSubject(user.getEmail())
-                .setId(user.getId());
+                .setId(user.getId().toString());
 
-        claims.put("hash", user.getPasswordHash());
         return claims;
     }
 }

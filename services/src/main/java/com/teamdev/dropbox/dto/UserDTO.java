@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 public class UserDTO {
 
-    public final String id;
+    public final Long id;
     public final String name;
     public final String email;
 }

@@ -11,7 +11,7 @@ import java.util.UUID;
 @Data
 public class User {
 
-    private final String id = UUID.randomUUID().toString();
+    private final Long id = UUID.randomUUID().getLeastSignificantBits();
 
     private String name;
     private String email;

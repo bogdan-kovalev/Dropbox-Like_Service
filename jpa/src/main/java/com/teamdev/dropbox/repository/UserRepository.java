@@ -12,13 +12,13 @@ public interface UserRepository {
 
     void save(User user) throws Exception;
 
-    User getById(String id) throws Exception;
+    User getById(Long id) throws Exception;
 
     User getByEmail(String email) throws Exception;
 
     Collection<User> getAll();
 
-    void delete(String id) throws Exception;
+    void delete(Long id) throws Exception;
 
     void deleteAll();
 }

@@ -12,17 +12,14 @@ import com.teamdev.dropbox.tinytypes.Email;
 import com.teamdev.dropbox.tinytypes.Password;
 import com.teamdev.dropbox.tinytypes.UserName;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Bogdan Kovalev.
  */
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api")
 public class UserServiceController {
 
     @Autowired
@@ -32,6 +29,7 @@ public class UserServiceController {
     UserAuthenticationService userAuthenticationService;
 
     @PostMapping
+    @RequestMapping("/register")
     public UserDTO register(@RequestBody RegistrationRequestBody body) throws Exception {
         return this.userRegistrationService.register(
                 new UserRegistrationInfo(
@@ -48,5 +46,11 @@ public class UserServiceController {
                         new Email(body.email), new Password(body.password)
                 )
         );
+    }
+
+    @GetMapping
+    @RequestMapping("/users")
+    public String getUsers() throws Exception {
+        return "Users!";
     }
 }

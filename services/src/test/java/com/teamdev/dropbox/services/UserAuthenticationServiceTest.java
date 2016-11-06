@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -79,7 +80,7 @@ public class UserAuthenticationServiceTest {
         final AuthenticationToken token = userAuthenticationService.login(
                 new LoginCredentials(registrationData.email, registrationData.password));
 
-        assertThat(userAuthenticationService.isTokenValid(token), is(true));
+        assertThat(userAuthenticationService.retrieveUser(token), is(notNullValue()));
     }
 
     @Test(expected = Exception.class)

@@ -14,8 +14,8 @@ import java.util.Map;
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
-    private final Map<String, User> idToUserMap;
-    private final Map<String, String> emailToIdMap;
+    private final Map<Long, User> idToUserMap;
+    private final Map<String, Long> emailToIdMap;
 
     public UserRepositoryImpl() {
         idToUserMap = new HashMap<>();
@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void save(User user) throws Exception {
-        final String userId = user.getId();
+        final Long userId = user.getId();
         final boolean newUser = !idToUserMap.containsKey(userId);
         if (newUser) {
             final String userEmail = user.getEmail();
@@ -39,7 +39,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User getById(String id) throws Exception {
+    public User getById(Long id) throws Exception {
         final User user = idToUserMap.get(id);
         if (user == null) {
             throw new Exception(String.format("Can't find user with id %s", id));
@@ -49,7 +49,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User getByEmail(String email) throws Exception {
-        final String id = emailToIdMap.get(email);
+        final Long id = emailToIdMap.get(email);
         if (id == null) {
             throw new Exception(String.format("Can't find user with email %s", email));
         }
@@ -62,7 +62,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void delete(String id) throws Exception {
+    public void delete(Long id) throws Exception {
         final String email = getById(id).getEmail();
         idToUserMap.remove(id);
         emailToIdMap.remove(email);
